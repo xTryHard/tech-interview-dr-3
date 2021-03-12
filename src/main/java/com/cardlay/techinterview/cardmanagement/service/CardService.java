@@ -23,7 +23,12 @@ public class CardService {
         this.cardHolderRepository = cardHolderRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<Card> getAllCardsForCardHolder(Long cardHolderId) {
+        if (!cardHolderRepository.existsById(cardHolderId)) {
+            throw new NotFoundException();
+        }
+
         return cardRepository.findAllByCardHolderId(cardHolderId);
     }
 
