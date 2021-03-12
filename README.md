@@ -1,16 +1,16 @@
 # Card Management API
 
 We are about to build a REST API for a card management platform.
-This API should allow us to do basic crud operations for card holders and cards.
+This API should allow us to do basic crud operations for cardholders and cards.
 We should be able to insert money or create transactions on a given card.
 Some features are already built, but in general we need the following additions in any order.
 
-1. Add filtering to the cards endpoint to only retrieve active cards and/or cards with a balance >= X
+1. Optional filtering to the get cards endpoint, so we can retrieve only active cards and/or cards with a balance >= X
 2. An endpoint to create a transaction which withdraws money from the credit card
-    1. Email the card holder if the cards balance drops below X
+    1. Email the cardholder if the cards balance drops below X
 3. An endpoint to set cards as inactive (soft delete cards)
-4. An endpoint to delete a card holder and all it’s cards and transactions
-5. Add a scheduler job to email card holders whose card has expired today
+4. An endpoint to delete a cardholder and all it’s cards and transactions
+5. Add a scheduler job to email cardholders whose card has expired today
 
 
 ## Current database structure
