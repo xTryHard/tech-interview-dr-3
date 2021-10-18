@@ -1,8 +1,12 @@
 package com.cardlay.techinterview.cardmanagement.service;
 
+import com.cardlay.techinterview.cardmanagement.entity.Card;
 import com.cardlay.techinterview.cardmanagement.entity.CardHolder;
 import com.cardlay.techinterview.cardmanagement.exception.NotFoundException;
 import com.cardlay.techinterview.cardmanagement.repository.CardHolderRepository;
+import com.cardlay.techinterview.cardmanagement.repository.CardRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,10 +17,14 @@ import java.util.stream.StreamSupport;
 @Service
 public class CardHolderService {
 
-    private final CardHolderRepository cardHolderRepository;
+    private static final Logger LOGGER = LoggerFactory.getLogger(CardHolderService.class);
 
-    public CardHolderService(CardHolderRepository cardHolderRepository) {
+    private final CardHolderRepository cardHolderRepository;
+    private CardRepository cardRepository;
+
+    public CardHolderService(CardHolderRepository cardHolderRepository, CardRepository cardRepository) {
         this.cardHolderRepository = cardHolderRepository;
+        this.cardRepository = cardRepository;
     }
 
     public List<CardHolder> getAllCardHolders() {
@@ -26,12 +34,24 @@ public class CardHolderService {
                 .toList();
     }
 
-    public CardHolder createCardHolder(String name, String email) {
+@Transactional
+    public CardHolder createCardHolder(String name, String email,List<CardDto> cards) {
         CardHolder cardHolder = new CardHolder();
         cardHolder.setName(name);
         cardHolder.setEmail(email);
 
-        return cardHolderRepository.save(cardHolder);
+        cardHolderRepository.save(cardHolder);
+
+        cards.forEach(card -> {
+            Card cardEntity = new Card();
+            cardEntity.setCardHolder(cardHolder);
+            cardEntity.setBalance(card.getBlance());
+            cardEntity.setCardNumber(card.getCardNumber());
+            cardRepository.save(cardEntity);
+            LOGGER.info("Card created with PAN {} and balance of {}", card.getCardNumber(), card.getBlance());
+        });
+
+        return cardHolder;
     }
 
     @Transactional
