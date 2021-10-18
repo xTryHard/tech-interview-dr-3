@@ -9,7 +9,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/cardHolders")
@@ -27,12 +26,12 @@ public class CardHolderController {
 
         return cardHolders.stream()
                 .map(CardHolderResponseDto::assembleFromCardHolder)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @PostMapping
     public CardHolderResponseDto createCardHolder(@RequestBody @Validated CreateCardHolderDto cardHolderDto) {
-        CardHolder cardHolder = cardHolderService.createCardHolder(cardHolderDto.getName(), cardHolderDto.getEmail());
+        CardHolder cardHolder = cardHolderService.createCardHolder(cardHolderDto.name(), cardHolderDto.email());
 
         return CardHolderResponseDto.assembleFromCardHolder(cardHolder);
     }
@@ -42,7 +41,7 @@ public class CardHolderController {
             @PathVariable("cardHolderId") Long cardHolderId,
             @RequestBody @Validated UpdateCardHolderDto updateCardHolderDto
     ) {
-        CardHolder cardHolder = cardHolderService.updateCardHolder(cardHolderId, updateCardHolderDto.getName());
+        CardHolder cardHolder = cardHolderService.updateCardHolder(cardHolderId, updateCardHolderDto.name());
 
         return CardHolderResponseDto.assembleFromCardHolder(cardHolder);
     }

@@ -9,7 +9,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/cards")
@@ -29,7 +28,7 @@ public class CardController {
 
         return cards.stream()
                 .map(CardResponseDto::assembleFromCard)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @PostMapping
@@ -39,8 +38,8 @@ public class CardController {
     ) {
         Card card = cardService.createCardForCardHolder(
                 cardHolderId,
-                createCardHolderDto.getCardNumber(),
-                createCardHolderDto.getBalance()
+                createCardHolderDto.cardNumber(),
+                createCardHolderDto.balance()
         );
 
         return CardResponseDto.assembleFromCard(card, true);
@@ -51,7 +50,7 @@ public class CardController {
             @PathVariable("cardId") Long cardId,
             @RequestBody @Validated UpdateCardBalanceDto updateCardBalanceDto
     ) {
-        Card card = cardService.addToCardBalance(cardId, updateCardBalanceDto.getAmount());
+        Card card = cardService.addToCardBalance(cardId, updateCardBalanceDto.amount());
 
         return CardResponseDto.assembleFromCard(card);
     }

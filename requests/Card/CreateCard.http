@@ -1,0 +1,8 @@
+# Get all cardholders
+POST {{baseUrl}}/api/v1/cards?cardHolderId=1
+Content-Type: application/json
+
+{
+  "cardNumber": "1234123412341234",
+  "balance": 1000
+}

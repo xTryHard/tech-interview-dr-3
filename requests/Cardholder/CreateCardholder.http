@@ -1,0 +1,18 @@
+# Get all cardholders
+POST {{baseUrl}}/api/v1/cardHolders
+Content-Type: application/json
+
+{
+  "name": "Test CardHolder",
+  "email": "test3@email.dk",
+  "cards": [
+    {
+      "cardNumber": "1234123412341234",
+      "balance": 500
+    },
+    {
+      "cardNumber": "1234123412341234",
+      "balance": 312
+    }
+  ]
+}

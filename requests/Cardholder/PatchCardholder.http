@@ -1,0 +1,7 @@
+# Get all cardholders
+PATCH {{baseUrl}}/api/v1/cardHolders/1
+Content-Type: application/json
+
+{
+  "name": "Test"
+}

@@ -35,7 +35,7 @@ public class CardService {
     @Transactional
     public Card addToCardBalance(Long cardId, BigDecimal amount) {
         Optional<Card> cardOptional = cardRepository.findById(cardId);
-        if (!cardOptional.isPresent()) {
+        if (cardOptional.isEmpty()) {
             throw new NotFoundException();
         }
 
@@ -48,7 +48,7 @@ public class CardService {
     @Transactional
     public Card createCardForCardHolder(Long cardHolderId, String cardNumber, BigDecimal balance) {
         Optional<CardHolder> cardHolderOptional = cardHolderRepository.findById(cardHolderId);
-        if (!cardHolderOptional.isPresent()) {
+        if (cardHolderOptional.isEmpty()) {
             throw new NotFoundException();
         }
 

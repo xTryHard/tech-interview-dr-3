@@ -20,7 +20,7 @@ Some features are already built, but in general we need the following additions 
 
 ## Requirements
 
-- Java 8
+- Java 16 (Gradle will pick this up automatically)
 - Docker/Docker Compose
 - Postgres (Provided through `docker-compose.yml`)
 - Mailhog (Provided through `docker-compose.yml`)

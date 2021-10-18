@@ -1,0 +1,7 @@
+# Get all cardholders
+POST {{baseUrl}}/api/v1/cards/1/insert
+Content-Type: application/json
+
+{
+  "amount": 150
+}

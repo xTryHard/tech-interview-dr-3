@@ -1,0 +1,2 @@
+# Get all cards for cardholder
+GET {{baseUrl}}/api/v1/cards?cardHolderId=1

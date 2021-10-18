@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
@@ -24,7 +23,7 @@ public class CardHolderService {
         Iterable<CardHolder> cardHolderIterable = cardHolderRepository.findAll();
 
         return StreamSupport.stream(cardHolderIterable.spliterator(), false)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public CardHolder createCardHolder(String name, String email) {
@@ -38,7 +37,7 @@ public class CardHolderService {
     @Transactional
     public CardHolder updateCardHolder(Long cardHolderId, String name) {
         Optional<CardHolder> cardHolderOptional = cardHolderRepository.findById(cardHolderId);
-        if (!cardHolderOptional.isPresent()) {
+        if (cardHolderOptional.isEmpty()) {
             throw new NotFoundException();
         }
 
