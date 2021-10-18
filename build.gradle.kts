@@ -1,9 +1,11 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
 plugins {
+    kotlin("plugin.jpa") version "1.5.31"
     id("org.springframework.boot") version "2.5.5"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
-    id("java")
+    kotlin("jvm") version "1.5.31"
+    kotlin("plugin.spring") version "1.5.31"
 }
 
 group = "com.cardlay.techinterview"
@@ -20,9 +22,9 @@ tasks.named<Wrapper>("wrapper") {
     distributionType = Wrapper.DistributionType.ALL
 }
 
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(targetJavaVersion))
+kotlin {
+    jvmToolchain {
+        (this as JavaToolchainSpec).languageVersion.set(JavaLanguageVersion.of(targetJavaVersion))
         vendor.set(JvmVendorSpec.ADOPTOPENJDK)
     }
 }
@@ -32,6 +34,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-mail")
+
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
 
     implementation("org.liquibase:liquibase-core:4.2.2")
     runtimeOnly("org.postgresql:postgresql:42.2.19")
@@ -55,9 +60,4 @@ tasks.withType<Test> {
     testLogging {
         exceptionFormat = TestExceptionFormat.FULL
     }
-
-    javaLauncher.set(javaToolchains.launcherFor {
-        languageVersion.set(JavaLanguageVersion.of(targetJavaVersion))
-        vendor.set(JvmVendorSpec.ADOPTOPENJDK)
-    })
 }
